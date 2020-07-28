@@ -14,8 +14,12 @@ func main(){
 	})
 	defer DB.Close()
 	r:=handlers.SetupRouter()
-	port:=os.Getenv("PORT")
-	if port==" " {port="8081"}
-	err:=http.ListenAndServe(fmt.Sprintf("%s",port),r)
-	if err!=nil {log.Fatalf("can not connect to server %v", err)}
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8081"
+	}
+	err := http.ListenAndServe(fmt.Sprintf(":%s", port), r)
+	if err != nil {
+		log.Fatalf("cannot start server %v", err)
+	}
 }
